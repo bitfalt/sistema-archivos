@@ -1,23 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "file_system.h"
 
-#define MAX_FILES 100
-#define MAX_BLOCKS 2048
-#define BLOCK_SIZE 512
-
-typedef struct {
-    char name[50];
-    int size;
-    int startBlock;
-    int blocksCount;
-    int blocks[MAX_BLOCKS];
-} File;
-
-File fileTable[MAX_FILES];
-char dataBlocks[MAX_BLOCKS][BLOCK_SIZE];
-int blockStatus[MAX_BLOCKS];  // 0 = free, 1 = occupied
-int fileCount = 0;
+// Global variables (could be made into a context struct if needed)
+static File fileTable[MAX_FILES];
+static char dataBlocks[MAX_BLOCKS][BLOCK_SIZE];
+static int blockStatus[MAX_BLOCKS];  // 0 = free, 1 = occupied
+static int fileCount = 0;
 
 void create_file(char *name, int size) {
     if (fileCount >= MAX_FILES) {
@@ -44,7 +34,6 @@ void create_file(char *name, int size) {
     newFile.size = size;
     newFile.blocksCount = requiredBlocks;
 
-    // Find the starting block
     int found = 0;
     int blockIndex = 0;
     for (int i = 0; i < MAX_BLOCKS; i++) {
@@ -149,11 +138,9 @@ void delete_file(char *name) {
     int found = 0;
     for (int i = 0; i < fileCount; i++) {
         if (strcmp(fileTable[i].name, name) == 0) {
-            // Free the blocks
             for (int j = 0; j < fileTable[i].blocksCount; j++) {
                 blockStatus[fileTable[i].blocks[j]] = 0;
             }
-            // Shift the files in the table
             for (int k = i; k < fileCount - 1; k++) {
                 fileTable[k] = fileTable[k + 1];
             }
@@ -166,47 +153,4 @@ void delete_file(char *name) {
     if (!found) {
         printf("Error: File %s not found.\n", name);
     }
-}
-
-void read_file(const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (!file) {
-        printf("Error: Could not open file %s\n", filename);
-        return;
-    }
-
-    char line[100];
-    char command[20], name[50];
-    int size, offset;
-    char data[100];
-
-    while (fgets(line, sizeof(line), file)) {
-        if (line[0] == '#') continue; // Ignore comments
-
-        if (sscanf(line, "CREATE %s %d", name, &size) == 2) {
-            create_file(name, size);
-        } else if (sscanf(line, "DELETE %s", name) == 1) {
-            delete_file(name);
-        } else if (sscanf(line, "WRITE %s %d %[^\n]", name, &offset, data) == 3) {
-            write_file(name, offset, data);
-        } else if (sscanf(line, "READ %s %d %d", name, &offset, &size) == 3) {
-            read_file_content(name, offset, size);
-        } else if (strncmp(line, "LIST", 4) == 0) {
-            list_files();
-        } else {
-            printf("Error: Unknown command in line: %s", line);
-        }
-    }
-
-    fclose(file);
-}
-
-int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <input_file>\n", argv[0]);
-        return 1;
-    }
-
-    read_file(argv[1]);
-    return 0;
 }
