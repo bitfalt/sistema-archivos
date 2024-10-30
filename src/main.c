@@ -1,6 +1,6 @@
 // src/main.c
 #include <stdio.h>
-#include "file_parser.h"
+#include "file_reader.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
