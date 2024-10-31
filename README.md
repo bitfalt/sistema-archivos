@@ -27,4 +27,4 @@ Para correr el programa se utiliza el siguiente comando:
 ```bash
 ./file_system input/<file>
 ```
-Se debe reemplazar file por el archivo de prueba que se quiere correr, los archivos existentes son: `test1.txt`, `test2.txt`, ..., `test6.txt`.
+Se debe reemplazar file por el archivo de prueba que se quiere correr, los archivos existentes son: `test1.txt`, `test2.txt`, ..., `test7.txt`.
