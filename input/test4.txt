@@ -1,3 +1,4 @@
+# Crear archivo repetido (da error)
 CREATE prueba.txt 1000
 CREATE prueba.txt 1000
 LIST

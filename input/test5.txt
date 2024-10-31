@@ -1,1 +1,2 @@
+# Crear archivo muy grande
 CREATE prueba2.txt 100000000000

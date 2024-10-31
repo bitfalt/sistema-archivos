@@ -1,6 +1,7 @@
+# Flujo correcto
 CREATE prueba.txt 1000
 WRITE prueba.txt 0 hola garbi
-READ prueba.txt 0 5
+READ prueba.txt 0 10
 LIST
 DELETE prueba.txt
 LIST

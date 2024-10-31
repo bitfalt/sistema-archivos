@@ -1,0 +1,2 @@
+# Borrar archivo no existente
+DELETE prueba1.txt

@@ -1,3 +1,4 @@
+# Sobrepasar el limite de archivos (100)
 CREATE prueba1.txt 1
 CREATE prueba2.txt 2
 CREATE prueba3.txt 3
