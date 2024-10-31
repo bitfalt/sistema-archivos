@@ -1,0 +1,3 @@
+CREATE prueba.txt 1000
+CREATE prueba.txt 1000
+LIST

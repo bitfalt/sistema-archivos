@@ -1,0 +1,6 @@
+CREATE prueba.txt 1000
+WRITE prueba.txt 0 hola garbi
+READ prueba.txt 0 5
+LIST
+DELETE prueba.txt
+LIST

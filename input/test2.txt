@@ -1,0 +1,1 @@
+WRITE prueba1.txt 0 error

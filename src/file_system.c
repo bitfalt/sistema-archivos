@@ -10,6 +10,14 @@ static int blockStatus[MAX_BLOCKS];  // 0 = free, 1 = occupied
 static int fileCount = 0;
 
 void create_file(char *name, int size) {
+    // Check if file with the same name already exists
+    for (int i = 0; i < fileCount; i++) {
+        if (strcmp(fileTable[i].name, name) == 0) {
+            printf("Error: File %s already exists.\n", name);
+            return;
+        }
+    }
+
     if (fileCount >= MAX_FILES) {
         printf("Error: Maximum file limit reached.\n");
         return;
